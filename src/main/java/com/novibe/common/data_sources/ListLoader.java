@@ -14,6 +14,7 @@ import java.net.http.HttpResponse;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.StructuredTaskScope;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 @Profile("CLOUDFLARE")
@@ -39,7 +40,7 @@ public abstract class ListLoader<T> {
                 .map(StructuredTaskScope.Subtask::get)
                 .flatMap(this::lineParser)
                 .distinct()
-                .toList();
+                .collect(Collectors.toCollection(ArrayList::new));
     }
 
     @SneakyThrows
